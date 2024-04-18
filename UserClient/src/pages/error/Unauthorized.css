@@ -1,0 +1,42 @@
+.unauthorized-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.unauthorized-message {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2d3748; /* Đỏ */
+  background-color: #f8f9fa; /* Màu nền */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+.unauthorized-message .head {
+  font-size: 100px;
+}
+
+.unauthorized-message .content {
+  font-size: 50px;
+}
+.unauthorized-message .description {
+  font-size: 20px;
+}
+.unauthorized-message .back-to-home {
+  margin-top: 10px;
+  font-size: 16px;
+  background-color: #2d3748;
+  color: #ffffff;
+  padding: 2px 20px 4px 20px;
+  text-align: center;
+  display: inline;
+  border-radius: 10px;
+}
+.unauthorized-message .back-to-home:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
