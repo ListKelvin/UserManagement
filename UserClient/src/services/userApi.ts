@@ -7,21 +7,47 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userApi = createApi({
   reducerPath: "users",
   tagTypes: ["UserList"],
-  baseQuery: fetchBaseQuery({ baseUrl: URL_API_LOCAL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: URL_API_LOCAL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = localStorage.getItem("token"); // Retrieve token from Redux state using selectToken selector
+      if (token) {
+        headers.append("Authorization", `Bearer ${token}`);
+      }
+      headers.append("Content-Type", "application/json");
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: ({ email, password }) => ({
-        url: `users/login`,
+        url: `user/login`,
         method: "POST",
         body: { email, password },
       }),
+    }),
+    getSearch: builder.query<UserType[], void>({
+      query: (search) => `user/search/${search}`,
+      providesTags: (result, _error, _arg) =>
+        result
+          ? [
+              ...result.userList.map(({ id }) => ({
+                type: "UserList" as const,
+                id,
+              })),
+              { type: "UserList", id: "LIST" },
+            ]
+          : [{ type: "UserList", id: "LIST" }],
     }),
     getUsers: builder.query<UserType[], void>({
       query: () => `user`,
       providesTags: (result, _error, _arg) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "UserList" as const, id })),
+              ...result.userList.map(({ id }) => ({
+                type: "UserList" as const,
+                id,
+              })),
               { type: "UserList", id: "LIST" },
             ]
           : [{ type: "UserList", id: "LIST" }],
@@ -30,7 +56,7 @@ export const userApi = createApi({
       query: (body) => {
         return {
           method: "POST",
-          url: `user`,
+          url: `user/create`,
           body: body,
         };
       },
@@ -41,5 +67,9 @@ export const userApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUsersQuery, useAddUserMutation, useLoginUserMutation } =
-  userApi;
+export const {
+  useGetUsersQuery,
+  useAddUserMutation,
+  useLoginUserMutation,
+  useGetSearchQuery,
+} = userApi;

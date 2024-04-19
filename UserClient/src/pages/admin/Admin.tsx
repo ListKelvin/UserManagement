@@ -4,15 +4,24 @@ import type { TableProps } from "antd";
 import { useEffect, useState } from "react";
 import AddUserModal from "../../components/AddUserModal";
 import { UserType } from "../../types";
-import { useAddUserMutation, useGetUsersQuery } from "../../services/userApi";
+import {
+  useAddUserMutation,
+  useGetSearchQuery,
+  useGetUsersQuery,
+} from "../../services/userApi";
 import { SearchProps } from "antd/es/input";
+import dayjs from "dayjs";
 
 const { Search } = Input;
 function AdminPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { data: users, isLoading } = useGetUsersQuery();
-  const [form] = Form.useForm();
   const [userData, setUserData] = useState<UserType[]>();
+  const [searchText, setSearchText] = useState<string>("");
+
+  const { data: users, isLoading } = useGetUsersQuery();
+  const { data: searchDate } = useGetSearchQuery(searchText);
+
+  const [form] = Form.useForm();
 
   const [addUserMutation, { isLoading: addUserLoading }] = useAddUserMutation();
   const columns: TableProps<UserType>["columns"] = [
@@ -61,13 +70,24 @@ function AdminPage() {
   };
   const handleAddUser = async (user: any) => {
     try {
-      const addedUser = await addUserMutation(user);
+      console.log(
+        'user.birthdate.slice("T")[0]: ',
+        dayjs(user.birthdate).format("YYYY/MM/DD")
+      );
+
+      const formateData = {
+        ...user,
+        birthdate: dayjs(user.birthdate).format("YYYY-MM-DD"),
+      };
+      const addedUser = await addUserMutation(formateData);
       console.log("addedUser", addedUser);
 
       const messageSucess = "Add User successfully!";
       form.resetFields();
       handleOk(messageSucess);
     } catch (error) {
+      console.log("error", error);
+
       message.error("Add user unsuccessful. Please try again.");
     }
   };
@@ -79,20 +99,27 @@ function AdminPage() {
   const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
     console.log(info?.source, value);
     if (info?.source == "input") {
-      const searchDate = userData?.filter((user) =>
-        user.username?.toLowerCase().includes(value.toLowerCase())
-      );
-      setUserData(searchDate);
+      // const searchDate = userData?.filter((user) =>
+      //   user.username?.toLowerCase().includes(value.toLowerCase())
+      // );
+      setSearchText(value);
     } else if (info?.source == "clear") {
-      setUserData(users);
+      setSearchText("");
     }
   };
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     setUserData(users);
+  //     console.log(userData);
+  //   }
+  // }, [users]);
   useEffect(() => {
-    if (users) {
-      setUserData(users);
-      console.log(userData);
+    if (searchText.length != 0) {
+      setUserData(searchDate?.userList);
+    } else {
+      setUserData(users?.userList);
     }
-  }, [users]);
+  }, [searchDate?.userList, searchText.length, users]);
   return (
     <div>
       <Space>

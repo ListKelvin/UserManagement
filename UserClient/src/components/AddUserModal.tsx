@@ -133,7 +133,7 @@ const AddUserModal = ({
           />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="Date of Birth"
           name="birthdate"
           rules={[
@@ -159,6 +159,20 @@ const AddUserModal = ({
           ]}
         >
           <DatePicker />
+        </Form.Item> */}
+        <Form.Item
+          label="Date of Birth"
+          name="birthdate"
+          hasFeedback
+          rules={[
+            { required: true, message: "Please enter birth date!" },
+            // {
+            //   pattern: validationPatterns.name.pattern,
+            //   message: validationPatterns.name.message,
+            // },
+          ]}
+        >
+          <Input />
         </Form.Item>
       </Form>
     </Modal>

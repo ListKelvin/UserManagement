@@ -20,9 +20,10 @@ const Login: FC<LoginProps> = () => {
         email: values.email,
         password: values.password,
       });
+      console.log("result", result);
 
-      if (result.data && result.data.token) {
-        localStorage.setItem("token", result.data.token);
+      if (result.data && result.data.accessToken) {
+        localStorage.setItem("token", result.data.accessToken);
 
         navigate("/");
         notification.success({
