@@ -11,14 +11,16 @@ const Unauthorized = Loadable({
 const Admin = Loadable({
   loader: () => import("../pages/admin/Admin"),
 });
-
+const Login = Loadable({
+  loader: () => import("../pages/login/Login"),
+});
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AuthGuard />,
     children: [
       {
-        path: "/admin",
+        path: "/",
         element: Admin,
       },
 
@@ -27,6 +29,10 @@ export const router = createBrowserRouter([
         element: ErrorNotLink,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: Login,
   },
 
   {

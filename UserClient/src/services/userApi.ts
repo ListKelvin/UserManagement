@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { URL_API_LOCAL } from "../config";
 import { UserType } from "./../types/index";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -8,9 +9,16 @@ export const userApi = createApi({
   tagTypes: ["UserList"],
   baseQuery: fetchBaseQuery({ baseUrl: URL_API_LOCAL }),
   endpoints: (builder) => ({
+    loginUser: builder.mutation({
+      query: ({ email, password }) => ({
+        url: `users/login`,
+        method: "POST",
+        body: { email, password },
+      }),
+    }),
     getUsers: builder.query<UserType[], void>({
       query: () => `user`,
-      providesTags: (result, error, arg) =>
+      providesTags: (result, _error, _arg) =>
         result
           ? [
               ...result.map(({ id }) => ({ type: "UserList" as const, id })),
@@ -33,4 +41,5 @@ export const userApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUsersQuery, useAddUserMutation } = userApi;
+export const { useGetUsersQuery, useAddUserMutation, useLoginUserMutation } =
+  userApi;

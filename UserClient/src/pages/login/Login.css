@@ -1,0 +1,142 @@
+.login-page {
+  background-image: url("/src/assets/background-login.jpg");
+  height: 130vh;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-space {
+  height: 922px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Optional vertical centering: */
+  margin: 0 auto;
+}
+
+.login-page .login-box {
+  background-color: white;
+  padding: 50px 50px;
+}
+
+.login-page .title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.login-page .link-email {
+  text-decoration: underline;
+  color: #285d9a;
+}
+
+.login-page .form-login {
+  width: 297px;
+  margin: auto;
+}
+
+.forget-pass {
+  text-align: end;
+}
+
+/* Trong file Login.css của bạn */
+.login-box .ant-input,
+.login-box .ant-input-password {
+  padding: 15px;
+  background-color: #f1f1f1;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.login-box .ant-btn {
+  width: 100%; /* Đặt bề rộng của nút sign in */
+  height: 50px;
+}
+
+.btn-t {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0em;
+}
+
+.login-box .ant-btn-primary {
+  background-color: #2d3748; /* Đổi màu nút sign in */
+  border-color: #2d3748; /* Đổi màu viền của nút sign in */
+  width: 398;
+}
+
+.forget-pass a {
+  color: #8b8b8b; /* Đổi màu của link Forgot password */
+}
+.forget-pass {
+  margin-bottom: 5px;
+}
+
+.title h1 {
+  font-family: Inter;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.forget-pass a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.login-box:hover {
+  background-color: #ffffff; /* Màu nền khi hover */
+}
+
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-btn-primary:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  background: #3e4d65;
+  color: #fff;
+}
+
+/* Styles for the login form container */
+.form-container {
+  width: 50%; /* Adjust width as needed */
+  margin: 0 auto; /* Center the form horizontally */
+  /* padding: 20px; */
+}
+
+/* Styles for form inputs */
+.form-input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Styles for the submit button */
+.submit-btn {
+  width: 100%;
+  /* padding: 10px; */
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  /* font-size: 16px; */
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  background-color: #b3d7ff; /* Disable button color */
+}
+
+/* Styles for error message */
+.error-message {
+  color: #ff0000;
+}
